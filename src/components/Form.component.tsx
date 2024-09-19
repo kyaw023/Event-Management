@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/react";
 import { ErrorMessage } from "formik";
 
 interface Props {
-  value: string | number | undefined ;
+  value: string | number | undefined;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur:
     | (React.FocusEventHandler<HTMLInputElement> &
@@ -45,8 +45,9 @@ const FormComponent = ({
         aria-describedby={`${name}-error`}
       />
       <ErrorMessage
-        className="  text-red-600 text-xs mt-1"
-        component={"p"}
+        className="text-red-600 text-xs mt-1"
+        component="p"
+        id={`${name}-error`}
         name={name}
       />
     </div>

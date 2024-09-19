@@ -18,7 +18,7 @@ const EventCardComponent = ({ event }: { event: EventProps }) => {
   return (
     <div className="border border-slate-200 rounded-lg ">
       <div className="p-4 space-y-2 ">
-        <Image width={300} alt={event.title} src={event.image} />
+        <Image width={400} alt={event.title} src={event.image} />
         <div className=" flex items-center justify-between">
           <Link to={`/event/${event.id}`}>
             <h1 className=" text-lg font-semibold hover:underline">

@@ -57,13 +57,13 @@ const EventDetailPage = () => {
           <BreadcrumbItem>Event Detail</BreadcrumbItem>
         </Breadcrumbs>
       </div>
-      <div className="flex gap-5 my-5">
+      <div className="flex flex-col md:flex-row gap-5 my-5">
         <div>
           <Image height={300} alt={singleEvent.title} src={singleEvent.image} />
         </div>
         <div className=" space-y-3">
           <h1 className=" text-xl font-semibold">{singleEvent.title}</h1>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Tooltip content={"Location"} color="primary">
               <Chip color="primary" variant="faded">
                 {singleEvent.location}

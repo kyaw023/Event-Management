@@ -1,18 +1,25 @@
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
-import { ContainerComponent, FormPageTwoComponent } from "../components";
-import { Link } from "react-router-dom";
-import { FormData } from "../types/event.types";
+import {
+  ContainerComponent,
+  FormPageThreeComponent,
+  FormPageTwoComponent,
+  LoadingComponent,
+} from "../components";
+import { Link, useNavigate } from "react-router-dom";
+import { EventFormData } from "../types/event.types";
 import { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button } from "@nextui-org/react";
 import FormPageOneComponet from "../components/FormPageOne.component";
+import { useCreateEvenetMutation } from "../store/endpoints/eventEndpoints";
+import toast from "react-hot-toast";
 
 const EventFormPage = () => {
-  const initialValues: FormData = {
+  const initialValues: EventFormData = {
     title: "",
     description: "",
-    image: "",
+    image: null,
     start_date: "",
     end_date: "",
     org_name: "",
@@ -20,29 +27,84 @@ const EventFormPage = () => {
     org_phone: "",
     org_logo: null,
     category_id: 0,
-    limit: null,
+    limit: 0,
     location: "",
     platform: "",
   };
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const validationSchema = Yup.object({
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
-    image: Yup.mixed().required("Image is required"),
-    category_id: Yup.number()
-      .required("Category is required")
-      .min(1, "Category ID must be greater than 0"),
-    location: Yup.string().required("Location is required"),
-    platform: Yup.string().required("Platform is required"),
-  });
+  // Separate validation schemas for each page
+  const validationSchemas = [
+    Yup.object({
+      title: Yup.string().required("Title is required"),
+      description: Yup.string().required("Description is required"),
+      image: Yup.mixed().required("Image is required"),
+    }),
+    Yup.object({
+      category_id: Yup.number()
+        .required("Category is required")
+        .min(1, "Category ID must be greater than 0"),
+      location: Yup.string().required("Location is required"),
+      platform: Yup.string().required("Platform is required"),
+    }),
+    Yup.object({
+      org_name: Yup.string().required("Organization Name is required"),
+      org_email: Yup.string()
+        .email("Invalid email")
+        .required("Email is required"),
+      org_phone: Yup.string().required("Phone is required"),
+    }),
+  ];
 
-  console.log(currentPage);
+  // Handle page validation before proceeding to the next page
+  const handleNextPage = async (
+    validateForm: Function,
+    setErrors: Function
+  ) => {
+    const errors = await validateForm();
+    if (Object.keys(errors).length === 0) {
+      setCurrentPage(currentPage + 1);
+    } else {
+      setErrors(errors);
+    }
+  };
+
+  console.log("CurrentPage", currentPage);
+
+  const [createEvent, { isSuccess }] = useCreateEvenetMutation();
+
+  const navigate = useNavigate();
 
   // Handle form submit
-  const handleSubmit = (values: FormData) => {
-    console.log(values); // You can send the form data to an API or another function
+  const handleSubmit = async (values: EventFormData) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("description", values.description);
+      if (values.image) formData.append("image", values.image); // File upload
+      formData.append("start_date", values.start_date);
+      formData.append("end_date", values.end_date);
+      formData.append("org_name", values.org_name);
+      formData.append("org_email", values.org_email);
+      formData.append("org_phone", values.org_phone);
+      if (values.org_logo) formData.append("org_logo", values.org_logo); // File upload
+      formData.append("category_id", values.category_id.toString());
+      formData.append("limit", values.limit.toString());
+      formData.append("location", values.location);
+      formData.append("platform", values.platform);
+      await createEvent(formData).unwrap();
+
+      if (isSuccess) {
+        toast.success("Event created successfully");
+        setCurrentPage(1);
+        navigate("/");
+      }
+      // Handle success (e.g., show a success message or redirect)
+    } catch (err) {
+      // Handle error
+      console.error("Failed to create event:", err);
+    }
   };
 
   return (
@@ -59,33 +121,51 @@ const EventFormPage = () => {
       <div>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={validationSchemas[currentPage - 1]}
           onSubmit={handleSubmit}
         >
-          {({ values, handleChange, handleBlur, errors, touched }) => (
+          {({
+            values,
+            handleChange,
+            handleBlur,
+            errors,
+            touched,
+            setFieldValue,
+            isSubmitting,
+            validateForm,
+            setErrors,
+          }) => (
             <Form>
-              <div>
-                <Form>
-                  {currentPage === 1 && (
-                    <FormPageOneComponet
-                      values={values}
-                      errors={errors}
-                      touched={touched}
-                      handleBlur={handleBlur}
-                      handleChange={handleChange}
-                    />
-                  )}
-                  {currentPage === 2 && (
-                    <FormPageTwoComponent
-                      values={values}
-                      errors={errors}
-                      touched={touched}
-                      handleBlur={handleBlur}
-                      handleChange={handleChange}
-                    />
-                  )}
-                </Form>
-              </div>
+              {currentPage === 1 && (
+                <FormPageOneComponet
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  errors={errors}
+                  touched={touched}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                />
+              )}
+              {currentPage === 2 && (
+                <FormPageTwoComponent
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                  setFieldValue={setFieldValue}
+                />
+              )}
+              {currentPage === 3 && (
+                <FormPageThreeComponent
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                />
+              )}
+
               <div className=" flex items-center justify-center my-4 space-x-3">
                 {currentPage > 1 && (
                   <Button
@@ -96,11 +176,17 @@ const EventFormPage = () => {
                   </Button>
                 )}
                 {currentPage < 3 ? (
-                  <Button onClick={() => setCurrentPage(currentPage + 1)}>
+                  <Button
+                    color="primary"
+                    size="md"
+                    onClick={() => handleNextPage(validateForm, setErrors)}
+                  >
                     Next
                   </Button>
                 ) : (
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">
+                    {isSubmitting ? <LoadingComponent /> : "Create Event"}
+                  </Button>
                 )}
               </div>
             </Form>

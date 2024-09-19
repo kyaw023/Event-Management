@@ -9,3 +9,4 @@ export { default as ProtectedRouteComponent } from "./ProtectedRoute.component";
 export { default as EventsComponent } from "./Events.component";
 export { default as FormPageOneComponent } from "./FormPageOne.component";
 export { default as FormPageTwoComponent } from "./FormPageTwo.component";
+export { default as FormPageThreeComponent } from "./FormPageThree.component";

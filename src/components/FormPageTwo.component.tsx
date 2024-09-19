@@ -1,3 +1,4 @@
+import { Input } from "@nextui-org/react";
 import FormComponent from "./Form.component";
 
 interface FormValues {
@@ -6,6 +7,7 @@ interface FormValues {
   org_name: string;
   org_email: string;
   org_phone: string;
+  org_logo: File | null;
 }
 
 interface FormErrors {
@@ -14,6 +16,7 @@ interface FormErrors {
   org_name?: string;
   org_email?: string;
   org_phone?: string;
+  org_logo?: string;
 }
 
 interface FormTouched {
@@ -22,6 +25,7 @@ interface FormTouched {
   org_name?: boolean;
   org_email?: boolean;
   org_phone?: boolean;
+  org_logo?: boolean;
 }
 
 interface Props {
@@ -33,6 +37,7 @@ interface Props {
     | undefined;
   errors?: FormErrors;
   touched?: FormTouched;
+  setFieldValue: (field: string, value: any) => void;
 }
 const FormPageTwoComponent: React.FC<Props> = ({
   values,
@@ -40,7 +45,14 @@ const FormPageTwoComponent: React.FC<Props> = ({
   handleChange,
   errors = {},
   touched = {},
+  setFieldValue,
 }) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files
+      ? event.currentTarget.files[0]
+      : null;
+    setFieldValue("org_logo", file);
+  };
   return (
     <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
       <FormComponent
@@ -59,10 +71,10 @@ const FormPageTwoComponent: React.FC<Props> = ({
         value={values.end_date}
         handleBlur={handleBlur}
         handleChange={handleChange}
-        type="text"
-        name="description"
-        label="Description"
-        placeholder="Enter description"
+        type="date"
+        name="end_date"
+        label="End Date"
+        placeholder="Enter end date"
         error={errors.end_date}
         touched={touched.end_date}
       />
@@ -101,6 +113,9 @@ const FormPageTwoComponent: React.FC<Props> = ({
         error={errors.org_phone}
         touched={touched.org_phone}
       />
+      <div>
+        <Input type="file" onChange={handleFileChange} name="org_logo" />
+      </div>
     </div>
   );
 };

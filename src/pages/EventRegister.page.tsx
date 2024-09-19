@@ -166,7 +166,7 @@ const EventRegisterPage = () => {
                     touched={touched.dob}
                   />
 
-                  <div className=" space-x-3">
+                  <div className="flex  space-x-3">
                     <Button variant="bordered" radius="sm" color="primary">
                       Cancel
                     </Button>
@@ -184,7 +184,7 @@ const EventRegisterPage = () => {
             </Formik>
           </div>
 
-          <div>
+          <div className="hidden md:flex">
             <Image
               height={300}
               alt="NextUI hero Image"

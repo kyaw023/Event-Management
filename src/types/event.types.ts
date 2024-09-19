@@ -90,18 +90,41 @@ export interface SearchEventsResponse {
   };
 }
 
-export interface FormData {
+export interface EventFormData {
   title: string;
   description: string;
-  image: string ;
+  image: File | null;
   start_date: string;
   end_date: string;
   org_name: string;
   org_email: string;
   org_phone: string;
   org_logo: File | null;
-  category_id: number ;
-  limit: number | null;
+  category_id: number;
+  limit: number;
   location: string;
   platform: string;
+}
+
+export interface CreateEventResponse {
+  message: string;
+  data: {
+    title: string;
+    description: string;
+    image: string;
+    start_date: string | null;
+    end_date: string | null;
+    org_name: string | null;
+    org_email: string | null;
+    org_phone: string | null;
+    org_logo: string | null;
+    category_id: string;
+    limit: number | null;
+    location: string | null;
+    platform: string | null;
+    created_by: number;
+    updated_at: string;
+    created_at: string;
+    id: number;
+  };
 }

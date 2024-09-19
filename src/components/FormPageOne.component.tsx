@@ -1,10 +1,11 @@
+import { Input } from "@nextui-org/react";
 import FormComponent from "./Form.component";
 
 // Define the shape of `values`, `errors`, and `touched`
 interface FormValues {
   title: string;
   description: string;
-  image:string;
+  image: File  | null;
   category_id: number | string;
 }
 
@@ -31,14 +32,24 @@ interface Props {
     | undefined;
   errors?: FormErrors;
   touched?: FormTouched;
+  setFieldValue: (field: string, value: any) => void;
 }
+// Handle the file input change separately
+
 const FormPageOneComponet: React.FC<Props> = ({
   values,
   handleBlur,
   handleChange,
   errors = {},
   touched = {},
+  setFieldValue,
 }: Props) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files
+      ? event.currentTarget.files[0]
+      : null;
+    setFieldValue("image", file);
+  };
   return (
     <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
       <FormComponent
@@ -65,17 +76,9 @@ const FormPageOneComponet: React.FC<Props> = ({
         touched={touched.description}
       />
 
-      <FormComponent
-        value={values.image}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        type="file"
-        name="image"
-        label="Image"
-        placeholder="Enter image"
-        error={errors.image}
-        touched={touched.image}
-      />
+      <div>
+        <Input type="file" onChange={handleFileChange} name="image" />
+      </div>
 
       <FormComponent
         value={values.category_id}

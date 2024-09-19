@@ -1,5 +1,6 @@
 import {
   ApiResponse,
+  CreateEventResponse,
   EventDetailResponse,
   RegisterEventResponse,
   SearchEventsResponse,
@@ -48,6 +49,14 @@ const EventEndpoints = ApiService.injectEndpoints({
         params: { title, category },
       }),
     }),
+
+    createEvenet: builder.mutation<CreateEventResponse, FormData>({
+      query: (data) => ({
+        url: "/event/create",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -56,4 +65,5 @@ export const {
   useGetSingleEventQuery,
   useGetRegisterEventMutation,
   useGetSearchEventQuery,
+  useCreateEvenetMutation,
 } = EventEndpoints;

@@ -7,7 +7,7 @@ const FooterComponent = () => {
   return (
     <div className=" border-t shadow-white border-gray-200 my-10 mt-auto">
       <ContainerComponent>
-        <div className=" flex  justify-between py-10">
+        <div className=" md:flex flex-wrap  md:justify-between space-y-3 md:space-y-0 py-10">
           <div className=" space-y-3">
             <h1 className=" text-xl font-semibold max-w-sm">
               Let’s Create your own events or workshops with us. Free to create.
@@ -39,7 +39,7 @@ const FooterComponent = () => {
       </ContainerComponent>
       <div className=" border-t shadow-white border-gray-200 p-4">
         <ContainerComponent>
-          <div className=" flex items-center justify-between ">
+          <div className=" flex flex-wrap  items-center md:justify-between justify-center space-y-3 md:space-y-0 ">
             <h1>Logo</h1>
             <p>© 2022 Event Management. All rights reserved.</p>
             <div className="flex items-center space-x-1">

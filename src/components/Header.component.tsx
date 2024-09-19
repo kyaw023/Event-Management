@@ -47,7 +47,7 @@ const HeaderComponent = () => {
           <div>
             <h1>Logo</h1>
           </div>
-          <ul className=" flex items-center space-x-3">
+          <ul className=" hidden md:flex items-center md:space-x-3  ">
             <Link to={"/"} className=" text-primary">
               Events
             </Link>
@@ -71,7 +71,7 @@ const HeaderComponent = () => {
               {user && token ? (
                 <UserComponent user={user} />
               ) : (
-                <div className="space-x-3">
+                <div className="md:space-x-3">
                   <Button
                     onClick={() => handleNavigate("/login")}
                     color="primary"
