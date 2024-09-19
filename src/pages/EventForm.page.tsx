@@ -58,26 +58,39 @@ const EventFormPage = () => {
   ];
 
   // Handle page validation before proceeding to the next page
-  const handleNextPage = async (
-    validateForm: Function,
-    setErrors: Function
-  ) => {
-    const errors = await validateForm();
-    if (Object.keys(errors).length === 0) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      setErrors(errors);
-    }
-  };
+  // const handleNextPage = async (
+  //   validateForm: Function,
+  //   setErrors: Function
+  // ) => {
+  //   const errors = await validateForm();
+  //   console.log()
+  //   if (Object.keys(errors).length === 0) {
+  //     setCurrentPage(currentPage + 1);
+  //   } else {
+  //     // Set errors only for the current page
+  //     const currentPageErrors = Object.keys(errors).reduce<{
+  //       [key: string]: string;
+  //     }>((acc, key) => {
+  //       if (key.startsWith(`page${currentPage}`)) {
+  //         acc[key] = errors[key];
+  //       }
+  //       return acc;
+  //     }, {});
+  //     setErrors(currentPageErrors);
+  //   }
+  // };
 
   console.log("CurrentPage", currentPage);
 
-  const [createEvent, { isSuccess }] = useCreateEvenetMutation();
+  const [createEvent, { isSuccess, data }] = useCreateEvenetMutation();
+
+  console.log(data);
 
   const navigate = useNavigate();
 
   // Handle form submit
   const handleSubmit = async (values: EventFormData) => {
+    console.log(values);
     try {
       const formData = new FormData();
       formData.append("title", values.title);
@@ -114,8 +127,15 @@ const EventFormPage = () => {
           <BreadcrumbItem>
             <Link to={"/"}>Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>Create Event</BreadcrumbItem>
+          <BreadcrumbItem>
+            {currentPage === 1
+              ? "Event Details"
+              : currentPage === 2
+              ? "Category & Platform"
+              : "Organization Info"}
+          </BreadcrumbItem>
         </Breadcrumbs>
+
         <h1 className=" my-3 text-xl font-semibold">Event Form Page</h1>
       </div>
       <div>
@@ -169,6 +189,7 @@ const EventFormPage = () => {
               <div className=" flex items-center justify-center my-4 space-x-3">
                 {currentPage > 1 && (
                   <Button
+                    type="button"
                     variant="bordered"
                     onClick={() => setCurrentPage(currentPage - 1)}
                   >
@@ -177,9 +198,10 @@ const EventFormPage = () => {
                 )}
                 {currentPage < 3 ? (
                   <Button
+                    type="button"
                     color="primary"
                     size="md"
-                    onClick={() => handleNextPage(validateForm, setErrors)}
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
                   >
                     Next
                   </Button>
