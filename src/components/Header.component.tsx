@@ -32,7 +32,6 @@ const HeaderComponent = () => {
   // Fetch events based on search parameters
   const { data } = useGetSearchEventQuery(searchParams);
 
-  console.log(data);
 
   // Handle search
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {

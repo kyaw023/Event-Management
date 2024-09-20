@@ -76,7 +76,7 @@ const EventsComponent: React.FC<EventsComponentProps> = ({
         </div>
       </div>
       <AnimatePresence mode="wait">
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {eventData.map((event: EventProps) => (
             <motion.div
               key={event.id}
