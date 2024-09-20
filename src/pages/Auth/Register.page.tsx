@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useRegisterMutation } from "../../store/endpoints/authEndpoints";
 import { APIErrorType, FormValueType } from "../../types/auth.types";
 import { useEffect } from "react";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 const RegisterPage = () => {
   //   initial value
@@ -67,8 +68,14 @@ const RegisterPage = () => {
   return (
     <ContainerComponent>
       <div className=" max-w-3xl mx-auto">
-        <div className="grid grid-cols-2 items-center justify-center mt-20 border border-l-slate-100 p-5 rounded-lg">
-          <div>
+        <Breadcrumbs className=" my-10">
+          <BreadcrumbItem>
+            <Link to={"/"}>Home</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>Register</BreadcrumbItem>
+        </Breadcrumbs>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center border border-l-slate-100 p-5 rounded-lg">
+          <div className=" hidden md:block">
             <img
               width={600}
               height={600}

@@ -66,11 +66,11 @@ const HeaderComponent = () => {
                 }
               />
             </form>
-            <div>
+            <div className=" ">
               {user && token ? (
                 <UserComponent user={user} />
               ) : (
-                <div className="md:space-x-3">
+                <div className="md:space-x-3 flex items-center ">
                   <Button
                     onClick={() => handleNavigate("/login")}
                     color="primary"
@@ -83,6 +83,7 @@ const HeaderComponent = () => {
                     variant="bordered"
                     color="primary"
                     radius="none"
+                    className="hidden md:flex"
                   >
                     Register
                   </Button>

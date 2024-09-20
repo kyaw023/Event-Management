@@ -17,6 +17,7 @@ import {
   loginStart,
   loginSuccess,
 } from "../../store/slice/auth/auth.slice";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 const LoginPage: React.FC = () => {
   const [loginFun] = useLoginMutation();
@@ -57,7 +58,13 @@ const LoginPage: React.FC = () => {
   return (
     <ContainerComponent>
       <div className=" max-w-3xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center mt-20 border border-l-slate-100 p-5 rounded-lg">
+        <Breadcrumbs className=" my-10">
+          <BreadcrumbItem>
+            <Link to={"/"}>Home</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>Login</BreadcrumbItem>
+        </Breadcrumbs>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center border border-l-slate-100 p-5 rounded-lg">
           <div className="hidden md:block">
             <img width={600} height={600} src={loginImage} alt="" />
           </div>

@@ -24,6 +24,8 @@ const EventDetailPage = () => {
     skip: isNaN(eventId), // Skip if `id` is not a number
   });
 
+  console.log(data)
+
   const user = useSelector((state: RootState) => state.auth.user);
 
   if (isLoading) {
