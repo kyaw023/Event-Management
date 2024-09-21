@@ -2,6 +2,8 @@ import {
   ApiResponse,
   CreateEventResponse,
   EventDetailResponse,
+  EventFormData,
+  MyEventResponse,
   RegisterEventResponse,
   SearchEventsResponse,
 } from "../../types/event.types";
@@ -57,6 +59,29 @@ const EventEndpoints = ApiService.injectEndpoints({
         body: data,
       }),
     }),
+
+    getMyEvent: builder.query<MyEventResponse, number | void>({
+      query: () => ({
+        url: `/my_events`,
+        method: "GET",
+      }),
+    }),
+    deleteMyEvent: builder.mutation<CreateEventResponse, number>({
+      query: (id) => ({
+        url: `/event/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
+    updateMyEvent: builder.mutation<
+      CreateEventResponse,
+      { id: number; data: EventFormData }
+    >({
+      query: ({ data, id }) => ({
+        url: `/event/${id}/update`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -66,4 +91,7 @@ export const {
   useGetRegisterEventMutation,
   useGetSearchEventQuery,
   useCreateEvenetMutation,
+  useGetMyEventQuery,
+  useDeleteMyEventMutation,
+  useUpdateMyEventMutation,
 } = EventEndpoints;

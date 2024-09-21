@@ -128,3 +128,7 @@ export interface CreateEventResponse {
     id: number;
   };
 }
+
+export interface MyEventResponse {
+  events: EventProps[];
+}

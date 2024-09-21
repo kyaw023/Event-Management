@@ -7,7 +7,9 @@ import toast from "react-hot-toast";
 
 const EventCardComponent = ({ event }: { event: EventProps }) => {
   const user = useSelector((state: RootState) => state.auth.user);
+  const BASE_URL = "https://codemal.newwaymm.com/api";
   const navigate = useNavigate();
+
   const handleRegister = (): void => {
     if (user) {
       navigate(`event/register/${event.id}`);
@@ -15,10 +17,17 @@ const EventCardComponent = ({ event }: { event: EventProps }) => {
       toast.error("Please login to register");
     }
   };
+  const getImageUrl = (image: string) => {
+    if (image.startsWith("http")) {
+      return image; // Full URL
+    }
+    return `${BASE_URL}${image}`; // Prepend base URL for relative paths
+  };
+
   return (
     <div className="border border-slate-200 rounded-lg ">
       <div className="p-4 space-y-2 ">
-        <Image width={400} alt={event.title} src={event.image} />
+        <Image width={400} alt={event.title} src={getImageUrl(event.image)} />
         <div className=" flex items-center justify-between">
           <Link to={`/event/${event.id}`}>
             <h1 className=" text-lg font-semibold hover:underline">

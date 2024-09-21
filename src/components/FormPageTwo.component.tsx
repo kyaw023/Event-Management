@@ -1,6 +1,5 @@
-import { Input } from "@nextui-org/react";
 import FormComponent from "./Form.component";
-import FormPageThreeComponent from "./FormPageThree.component";
+import FileDropzone from "./FileDropzone";
 
 interface FormValues {
   start_date: string;
@@ -48,12 +47,6 @@ const FormPageTwoComponent: React.FC<Props> = ({
   touched = {},
   setFieldValue,
 }) => {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files
-      ? event.currentTarget.files[0]
-      : null;
-    setFieldValue("org_logo", file);
-  };
   return (
     <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
       <FormComponent
@@ -115,10 +108,12 @@ const FormPageTwoComponent: React.FC<Props> = ({
         touched={touched.org_phone}
       />
       <div>
-        <Input type="file" onChange={handleFileChange} name="org_logo" />
+        <FileDropzone
+          name="org_logo"
+          value={values.org_logo}
+          setFieldValue={setFieldValue}
+        />
       </div>
-
-      
     </div>
   );
 };

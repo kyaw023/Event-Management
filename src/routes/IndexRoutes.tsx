@@ -9,6 +9,7 @@ import {
   EventRegisterPage,
   HomePage,
   LoginPage,
+  MyEventsPage,
   RegisterPage,
 } from "../pages";
 import { LayoutComponent, ProtectedRouteComponent } from "../components";
@@ -61,15 +62,19 @@ const IndexRoutes = () => {
         },
         {
           path: "/event/register/:id",
-          element: <EventRegisterPage />,
+          element: user ? <EventRegisterPage /> : <Navigate to={"/"} />,
         },
         {
           path: "/create-event",
-          element: <EventFormPage />,
+          element: user ? <EventFormPage /> : <Navigate to={"/"} />,
         },
         {
-          path: "/edit-event",
-          element: <EventFormPage />,
+          path: "/edit-event/:id",
+          element: user ? <EventFormPage /> : <Navigate to={"/"} />,
+        },
+        {
+          path: "/my-events",
+          element: user ? <MyEventsPage /> : <Navigate to={"/"} />,
         },
         {
           path: "/login",

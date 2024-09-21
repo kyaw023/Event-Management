@@ -16,7 +16,6 @@ const HomePage = () => {
     setSearchParams({ page: page.toString() });
   };
 
-  console.log(data);
   return (
     <ContainerComponent>
       <div className=" my-10">

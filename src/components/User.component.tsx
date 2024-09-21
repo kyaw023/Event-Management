@@ -45,7 +45,9 @@ const UserComponent = ({ user }: { user: UserProps }) => {
             <p className="font-semibold">Signed in as</p>
             <p className="font-semibold">{user.email}</p>
           </DropdownItem>
-          <DropdownItem key="settings">My Events</DropdownItem>
+          <DropdownItem key="settings">
+            <Link to={"/my-events"}>My Events</Link>
+          </DropdownItem>
           <DropdownItem key="team_settings">
             <Link to={"/create-event"}>Create Events</Link>
           </DropdownItem>

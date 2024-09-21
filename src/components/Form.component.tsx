@@ -15,6 +15,7 @@ interface Props {
   type: string;
   error?: string | undefined;
   touched?: boolean;
+  className?: string;
 }
 
 const FormComponent = ({
@@ -27,6 +28,7 @@ const FormComponent = ({
   type,
   error,
   touched,
+  className = "",
 }: Props) => {
   const valueAsString = value !== undefined ? value.toString() : "";
 
@@ -43,6 +45,7 @@ const FormComponent = ({
         placeholder={placeholder}
         aria-invalid={!!error && touched}
         aria-describedby={`${name}-error`}
+        className={className}
       />
       <ErrorMessage
         className="text-red-600 text-xs mt-1"

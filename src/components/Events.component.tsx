@@ -51,7 +51,6 @@ const EventsComponent: React.FC<EventsComponentProps> = ({
     );
   }
 
-  console.log(events?.current_page);
   return (
     <div>
       <div>

@@ -7,6 +7,7 @@ export { default as LoadingComponent } from "./Loading.component";
 export { default as UserComponent } from "./User.component";
 export { default as ProtectedRouteComponent } from "./ProtectedRoute.component";
 export { default as EventsComponent } from "./Events.component";
-export { default as FormPageOneComponent } from "./FormPageOne.component";
 export { default as FormPageTwoComponent } from "./FormPageTwo.component";
 export { default as FormPageThreeComponent } from "./FormPageThree.component";
+export { default as FileDropzone } from "./FileDropzone";
+export { default as FormPageOneComponent } from "./FormPageOne.component";

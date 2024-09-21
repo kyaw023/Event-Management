@@ -1,11 +1,11 @@
-import { Input } from "@nextui-org/react";
 import FormComponent from "./Form.component";
 
-// Define the shape of `values`, `errors`, and `touched`
+import FileDropzone from "./FileDropzone";
+
 interface FormValues {
   title: string;
   description: string;
-  image: File  | null;
+  image: File | null;
   category_id: number | string;
 }
 
@@ -36,7 +36,7 @@ interface Props {
 }
 // Handle the file input change separately
 
-const FormPageOneComponet: React.FC<Props> = ({
+const FormPageOneComponent: React.FC<Props> = ({
   values,
   handleBlur,
   handleChange,
@@ -44,12 +44,6 @@ const FormPageOneComponet: React.FC<Props> = ({
   touched = {},
   setFieldValue,
 }: Props) => {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files
-      ? event.currentTarget.files[0]
-      : null;
-    setFieldValue("image", file);
-  };
   return (
     <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
       <FormComponent
@@ -62,6 +56,17 @@ const FormPageOneComponet: React.FC<Props> = ({
         placeholder="Enter title"
         error={errors.title}
         touched={touched.title}
+      />
+      <FormComponent
+        value={values.category_id}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        type="number"
+        name="category_id"
+        label="Category ID"
+        placeholder="Enter category id"
+        error={errors.category_id}
+        touched={touched.category_id}
       />
 
       <FormComponent
@@ -76,23 +81,13 @@ const FormPageOneComponet: React.FC<Props> = ({
         touched={touched.description}
       />
 
-      <div>
-        <Input type="file" onChange={handleFileChange} name="image" />
-      </div>
-
-      <FormComponent
-        value={values.category_id}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        type="number"
-        name="category_id"
-        label="Category ID"
-        placeholder="Enter category id"
-        error={errors.category_id}
-        touched={touched.category_id}
+      <FileDropzone
+        name="image"
+        value={values.image}
+        setFieldValue={setFieldValue}
       />
     </div>
   );
 };
 
-export default FormPageOneComponet;
+export default FormPageOneComponent;

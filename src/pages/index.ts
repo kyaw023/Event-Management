@@ -8,3 +8,5 @@ export { default as EventRegisterPage } from "./EventRegister.page";
 export { default as AboutUsPage } from "./AboutUs.page";
 export { default as ContactPage } from "./Contact.page";
 export { default as EventFormPage } from "./EventForm.page";
+
+export { default as MyEventsPage } from "./MyEvents.page";
